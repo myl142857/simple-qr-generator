@@ -22,6 +22,7 @@ if (!fileName || !inputString) {
 } else {
     
     var qrImageData = qr.image(inputString, { type: 'png' });
+    // create a writeable FS stream and pipe the data into it.
     qrImageData.pipe(require('fs').createWriteStream(fileName+'.png'));
     console.log("\n  qr-generator\n\n  String \"" + colors.green(inputString) + "\" converted to QR code image: " + colors.green(fileName + ".png\n") ); 
 
