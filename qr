@@ -1,0 +1,30 @@
+#!/usr/bin/env node
+/* 
+   qr-generator script
+
+   r.w. 2015
+*/
+
+
+var qr = require('qr-image');
+var colors = require('colors/safe');
+
+
+var inputString = process.argv[2];
+var fileName = process.argv[3];
+
+if (!fileName || !inputString) {
+    var optionString = (process.argv[1].split('/'));
+    var optionIndex = optionString.length;
+    var option =  optionString[(optionIndex - 1)];
+    console.log("\n  qr-generator\n\n  usage: " + colors.yellow("node " + option + " [string] [fileName]\n"));
+    process.exit();
+} else {
+    
+    var qrImageData = qr.image(inputString, { type: 'png' });
+    qrImageData.pipe(require('fs').createWriteStream(fileName+'.png'));
+    console.log("\n  qr-generator\n\n  String \"" + colors.green(inputString) + "\" converted to QR code image: " + colors.green(fileName + ".png\n") ); 
+
+
+}
+
